@@ -1,0 +1,11 @@
+.user-form {
+    margin: auto !important;
+    width: 70% !important;
+    border: 3px solid rgb(54, 56, 219) !important;
+    padding: 10px !important;
+    height: auto;
+}
+
+.profile-image {
+    width: 50% !important;
+}

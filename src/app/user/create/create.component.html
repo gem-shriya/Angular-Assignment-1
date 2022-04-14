@@ -1,0 +1,204 @@
+<div class="container bg-info">
+    <h3 class="text-center m-3 text-light">Enter Details</h3>
+    <div class="user-form bg-light m-3">
+        <form [formGroup]="loginForm" (ngSubmit)="onReview()" class="m-3">
+            <div class="form-group user-name m-2 row">
+                <div class="col-sm-2">
+                    <strong>    <label for="name" >Full Name</label></strong>
+                </div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="name" formControlName="name" />
+                    <div class="alert alert-danger" *ngIf="name?.invalid && (name?.dirty || name?.touched)">
+                        <div *ngIf="name?.hasError('required')">Name is required.</div>
+                        <div *ngIf="name?.hasError('pattern')">
+                            Please, Enter valid Name.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group user-gender m-2 row">
+                <div class="col-sm-2">
+                    <strong><label for="gender">Gender</label></strong>
+                </div>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="exampleRadios1" value="Female" formControlName="gender" />
+                        <label class="form-check-label" for="exampleRadios1">
+                            Female
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="exampleRadios2" value="Male" formControlName="gender" />
+                        <label class="form-check-label" for="exampleRadios2"> Male </label>
+                    </div>
+
+                    <div class="alert alert-danger" *ngIf="gender?.invalid && (gender?.touched || gender?.dirty)">
+                        Gender is Required
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group m-2 row">
+                <div class="col-sm-2 ">
+                    <strong>  <label for="email">Email address</label></strong>
+                </div>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" formControlName="email" />
+                    <div class="alert alert-danger" *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+                        <div *ngIf="email?.hasError('required')">Email is required.</div>
+                        <div *ngIf="email?.hasError('email')">
+                            Please, Enter valid Email Address.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-2 row">
+                <div class="col-sm-2">
+                    <strong><label for="mobile">Mobile</label></strong>
+                </div>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="mobile" formControlName="mobile" />
+                    <!-- <span class="text-danger" *ngIf="mobile?.invalid && (mobile?.dirty ||mobile?.touched)">Enter Valid Contact Number</span> -->
+                    <div *ngIf="mobile?.touched && mobile?.invalid" class="alert alert-danger">
+                        <div *ngIf="mobile?.hasError('required')">
+                            Mobile Number is required.
+                        </div>
+                        <div *ngIf="mobile?.hasError('pattern')">
+                            Please, Enter 10 digit Mobile Number.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group m-2 row">
+                <div class="col-sm-2">
+                    <strong>  <label for="exampleFormControlSelect1">Category</label></strong>
+                </div>
+                <div class="col-sm-10">
+                    <select class="form-control" id="exampleFormControlSelect1" formControlName="category">
+                        <option>General</option>
+                        <option>SC/ST</option>
+                        <option>OBC</option>
+                    </select>
+                    <div *ngIf="category?.touched && category?.invalid" class="alert alert-danger">
+                        <div *ngIf="category?.hasError('required')">
+                            Category is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="form-group m-2">
+                <label for="mobile">Technology </label>
+                <br />
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Java" formControlName="java" />
+                    <label class="form-check-label" for="java"> Java </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="C++" formControlName="cPlusPlus" />
+                    <label class="form-check-label" for="C++"> C++ </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Python" formControlName="python" />
+                    <label class="form-check-label" for="python"> Python </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="JavaScript" formControlName="javascript" />
+                    <label class="form-check-label" for="javascript">
+                            JavaScript
+                        </label>
+                </div>
+
+
+            </div> -->
+            <div class="form-group m-2 row">
+                <div class="col-sm-2">
+                    <strong>   <label for="technology">Technology </label></strong>
+                </div>
+                <div class="col-sm-10">
+                    <div *ngFor="let tech of technologyList; let i = index">
+                        <label>
+                            <input type="checkbox" [value]="tech" (change)="onCheckboxChange($event)" />
+                            {{ tech }}
+                        </label>
+                    </div>
+                    <div *ngIf="
+              technology?.invalid && (technology?.touched || technology?.dirty)
+            " class="alert alert-danger">
+                        <!-- <div *ngIf="category?.hasError('required')"> -->
+                        Technologyy is required.
+                        <!-- </div> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group m-2 row">
+                <div class="col-sm-2">
+                    <strong>   <label for="exampleFormControlFile1">Profile Picture</label></strong>
+                </div>
+                <div class="col-sm-10">
+                    <input type="file" class="form-control-file" id="exampleFormControlFile1" formControlName="profilePic" (change)="onChange($event)" />
+                    <!-- <div *ngIf="
+                    profilePic?.invalid && (profilePic?.touched || profilePic?.dirty)
+                  " class="alert alert-danger">
+                        <div *ngIf="category?.hasError('required')">
+                            Profile Picture is required.
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary " (click)="openModal()" [disabled]="!loginForm.valid">
+                Preview
+            </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal For preview Button -->
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyle }">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Entered Data</h4>
+            </div>
+            <div class="modal-body row">
+                <div class="col-8">
+                    <ul class="list-group">
+                        <strong>Name</strong>
+                        <li class="list-group-item">{{ dataUser.name }}</li>
+                        <strong>Email</strong>
+                        <li class="list-group-item">{{ dataUser.email }}</li>
+                        <strong>Mobile</strong>
+                        <li class="list-group-item">{{ dataUser.mobile }}</li>
+                        <strong>Gender</strong>
+                        <li class="list-group-item">{{ dataUser.gender }}</li>
+                        <strong>Category</strong>
+                        <li class="list-group-item">{{ dataUser.category }}</li>
+                        <strong>Technology</strong>
+                        <li class="list-group-item">
+                            <ul *ngFor="let tech of dataUser.technology">
+                                <li>{{ tech }}</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-4">
+                    <strong class="text-center">Profile Picture </strong>
+                    <br />
+                    <img class="profile-image" [src]="profileImage" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="closeModal()">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" (click)="submitForm()">
+                    confirm
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
